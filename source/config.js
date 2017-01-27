@@ -9,7 +9,7 @@ module.exports = function (bot) {
 
     var config = Object.merge(
         {
-            pattern: '!!',
+            pattern: '!/',
             welcomeMessage: welcomeFmt.supplant(rulesLink),
 
             // this is some test key taken from the OpenWeatherMap site

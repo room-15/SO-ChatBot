@@ -1534,7 +1534,7 @@ var bot = window.bot = {
 
     activateDevMode: function (pattern) {
         this.devMode = true;
-        this.config.pattern = pattern || 'beer!';
+        this.config.pattern = pattern || '!/';
         if (IO.events.userjoin) {
             IO.events.userjoin.length = 0;
         }
@@ -2099,7 +2099,7 @@ module.exports = function (bot) {
 
     var config = Object.merge(
         {
-            pattern: '!!',
+            pattern: '!/',
             welcomeMessage: welcomeFmt.supplant(rulesLink),
 
             // this is some test key taken from the OpenWeatherMap site
