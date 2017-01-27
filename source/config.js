@@ -1,10 +1,10 @@
 module.exports = function (bot) {
-    var welcomeFmt = 'Welcome to the JavaScript chat! Please review the {0}. ' +
+    var welcomeFmt = 'Welcome to the Android chat! Please review the {0}. ' +
         'Please don\'t ask if you can ask or if anyone\'s around; just ask ' +
         'your question, and if anyone\'s free and interested they\'ll help.';
     var rulesLink = bot.adapter.link(
         'room rules',
-        'http://rlemon.github.com/so-chat-javascript-rules/'
+        'http://room-15.github.io/'
     );
 
     var config = Object.merge(
