@@ -370,6 +370,7 @@ var input = {
             return;
         }
         else if (et !== 1 && et !== 2) {
+            console.log("ET: " + et);
             return;
         }
 
