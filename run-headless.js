@@ -2,7 +2,8 @@ var Nightmare = require('nightmare'),
 	readline = require('readline');
 
 var hound = new Nightmare({
-	cookiesFile: 'cookies.jar'
+	cookiesFile: 'cookies.jar',
+	webSecurity: false
 });
 
 var config = require('./run-headless.config.json');
@@ -41,9 +42,9 @@ hound.drainQueue = function (cb) {
 
 function seLogin () {
 	hound
-		.type('#se-login input[type="email"]', config.email)
-		.type('#se-login input[type="password"]', config.password)
-		.click('#se-login input[type="button"]')
+		.type('#login-form input[type="email"]', config.email)
+		.type('#login-form input[type="password"]', config.password)
+		.click('#login-form input[type="button"]')
 		.wait()
 		.screenshot('pics/login.png');
 }
