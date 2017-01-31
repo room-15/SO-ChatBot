@@ -113,6 +113,32 @@ Response:
 And...that's it. Pretty simple. Most of the requests endpoints are like that.
 */
 
+/**
+ * Event Types:
+ *
+ *  1 New Message
+ *  2 Edit Message
+ *  3 User Join
+ *  4 User Leave
+ *  5 Editing room description
+ *  6 Star add/remove
+ *  7
+ *  8 Ping
+ *  9
+ *  10 Message Deleted
+ *  11
+ *  12
+ *  13
+ *  14
+ *  15 Access changed for user_id
+ *  16 Request Access
+ *  17 Room invites
+ *  18 Ping specific message
+ *  19 Moving messages
+ *  20
+ *  
+*/
+
 /*global location, WebSocket, setTimeout, module, require*/
 /*global fkey, CHAT*/
 'use strict';
@@ -368,6 +394,9 @@ var input = {
         if (et === 3 || et === 4) {
             this.handleUserEvent(msg);
             return;
+        } else if (et === 16) {
+            console.log("A new access request!");
+            this.processAccessRequest(msg);
         }
         else if (et !== 1 && et !== 2) {
             console.log("ET: " + et);
@@ -449,6 +478,45 @@ var input = {
         */
         else if (et === 4) {
             IO.fire('userleave', msg);
+        }
+    },
+    processAccessRequest: function (msg) {
+        var humanURl =  "https://room-15.com/request/" + msg.user_id;
+        var arURL = "https://room-15.com/request/" + msg.user_id + "/json";
+
+        IO.jsonp({
+            url : arURL,
+            fun : gotURL,
+            jsonpName : 'callback'
+        });
+
+        function gotURL ( resp ) {
+            console.log(resp);
+            var badratio = resp.badratio;
+            var insufficientRep = resp.insufficientRep;
+            var defaultLikeUsername = resp.defaultLikeUsername;
+            var pingName = resp.ping_name;
+            var issues = "";
+            if(insufficientRep) {
+                issues = issues + "at least 80 rep";
+            }
+            if(badratio) {
+                if(issues == "") {
+                    issues = issues + "a q:a ratio of 3:4";
+                } else {
+                    issues = issues + ", a q:a ratio of 3:4";
+                }
+            }
+            if(defaultLikeUsername) {
+                if(issues == "") {
+                    issues = issues + "a non-default username";
+                } else {
+                    issues = issues + ", a non-default username";
+                }
+            }
+
+            var message = "@" + pingName + " You need " + issues + " to talk here. Please see [this link](" + humanURl + ") for more details."
+            console.log(message);
         }
     },
 
