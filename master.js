@@ -787,6 +787,7 @@ And...that's it. Pretty simple. Most of the requests endpoints are like that.
  *  18 Ping specific message
  *  19 Moving messages
  *  20
+ *  34 User profile update
  *  
 */
 
@@ -1168,6 +1169,7 @@ var input = {
 
             var message = "@" + pingName + " You need " + issues + " to talk here. Please see [this link](" + humanURl + ") for more details."
             console.log(message);
+            output.sendToRoom(message, 15)
         }
     },
 
