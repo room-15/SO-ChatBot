@@ -1149,6 +1149,7 @@ var input = {
             var defaultLikeUsername = resp.defaultLikeUsername;
             var pingName = resp.ping_name;
             var issues = "";
+            var user_id = resp.user_id;
             if(badratio || defaultLikeUsername || insufficientRep) {
                 if(insufficientRep) {
                     issues = issues + "at least 80 rep";
@@ -1177,7 +1178,7 @@ var input = {
                     url   : '/rooms/setuseraccess/15',
                     data   : {
                         userAccess : 'remove',
-                        aclUserId : msg,
+                        aclUserId : user_id,
                         fkey : fkey().fkey
                     },
                     method  : 'POST',
