@@ -1149,27 +1149,44 @@ var input = {
             var defaultLikeUsername = resp.defaultLikeUsername;
             var pingName = resp.ping_name;
             var issues = "";
-            if(insufficientRep) {
-                issues = issues + "at least 80 rep";
-            }
-            if(badratio) {
-                if(issues == "") {
-                    issues = issues + "a q:a ratio of 3:4";
-                } else {
-                    issues = issues + ", a q:a ratio of 3:4";
+            if(badratio || defaultLikeUsername || insufficientRep) {
+                if(insufficientRep) {
+                    issues = issues + "at least 80 rep";
                 }
-            }
-            if(defaultLikeUsername) {
-                if(issues == "") {
-                    issues = issues + "a non-default username";
-                } else {
-                    issues = issues + ", a non-default username";
+                if(badratio) {
+                    if(issues == "") {
+                        issues = issues + "a q:a ratio of 3:4";
+                    } else {
+                        issues = issues + ", and a q:a ratio of 3:4";
+                    }
                 }
-            }
+                if(defaultLikeUsername) {
+                    if(issues == "") {
+                        issues = issues + "a non-default username";
+                    } else {
+                        issues = issues + ", and a non-default username";
+                    }
+                }
 
-            var message = "@" + pingName + " You need " + issues + " to talk here. Please see [this link](" + humanURl + ") for more details."
-            console.log(message);
-            output.sendToRoom(message, 15)
+                var message = "@" + pingName + " You need " + issues + " to talk here. Please see [this link](" + humanURl + ") for more details."
+                console.log(message);
+                output.sendToRoom(message, 15);
+
+            
+                IO.xhr({
+                    url   : '/rooms/setuseraccess/15',
+                    data   : {
+                        userAccess : 'remove',
+                        aclUserId : msg,
+                        fkey : fkey().fkey
+                    },
+                    method  : 'POST',
+                    complete : finish
+                });
+            } else {
+                console.log("User " + pingName + "(" + resp.user_id + ") has no obvious issues");
+                //output.sendToRoom("", 15);
+            }
         }
     },
 
