@@ -532,6 +532,9 @@ var input = {
                     method  : 'POST',
                     complete : finish
                 });
+                function finish ( resp, xhr ) {
+                    //Nothing to do here
+                }
             } else {
                 console.log("User " + pingName + "(" + resp.user_id + ") has no obvious issues");
                 //output.sendToRoom("", 15);
