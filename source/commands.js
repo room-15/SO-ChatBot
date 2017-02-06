@@ -1,8 +1,46 @@
 'use strict';
 // TODO something a bit more legit...break this file apart
+var catLastRun;
+var catGifLastRun;
+var catCount = 0;
+var unicornLastRun;
+
 module.exports = function (bot) {
 
-    var commands = {
+        var commands = {
+            meow : function( args ) {
+        
+            var currentRun = new Date().getTime();
+    
+            console.log(catLastRun);
+            console.log(currentRun);
+    
+            if(!bot.isOwner(args.get('user_id'))) {
+                if((currentRun - catLastRun) < 20*60*1000) {
+                    console.log('in if');
+                    return 'This command may only be run once every 15 minutes by peasants';
+    
+                } else {
+                    console.log('in else');
+                    catLastRun = currentRun;
+                }
+            }
+    
+            var cats = "https://room-15.com/cat";
+    
+        IO.jsonp({
+            url : cats,
+            fun : gotURL,
+            jsonpName : 'callback'
+        });
+    
+        function gotURL ( resp ) {
+            console.log(resp);
+            catCount = catCount + 1;
+            var msg = IO.decodehtmlEntities( resp.src );
+            args.send(msg);
+        }
+        },
         help: function (args) {
             if (args && args.length) {
 
