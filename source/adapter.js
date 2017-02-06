@@ -500,9 +500,7 @@ var input = {
             var issues = "";
             var user_id = resp.user_id;
             var requestCount = resp.requests;
-            if(requestCount == 2) {
-                var message = "@" + pingName + " ";
-            } else if(badratio || defaultLikeUsername || insufficientRep) {
+            if(badratio || defaultLikeUsername || insufficientRep) {
                 if(insufficientRep) {
                     issues = issues + "at least 80 rep";
                 }
@@ -523,20 +521,20 @@ var input = {
 
                 var message = "@" + pingName + " You need " + issues + " to talk here. Please see [this link](" + humanURl + ") for more details."
 
-                if(requestCount == 2) {
+                if(requestCount == 1) {
                     var messages = ['Woah now, hold up right there. Spamming the request access button will only get you banned. Come back in 24 hours and request again IF you have fixed the issues outlined in the last message. Requesting access again in less than 24 hours will result in a ban.', 
 'Stop. Do not pass go. Do not collect 200. Repeatedly requesting access will result in a ban. Come back when you have fixed the issues outlined in the last message. Requesting access again in less than 24 hours will result in a ban.', 
 'Strike 2/3. Requesting access again in less than 24 hours will result in a ban.', 
 'I may be a bot, but I can understand pointless actions. Requesting access again in less than 24 hours will result in a ban.'];
                     message = "@" + pingName + " " + messages[Math.floor(Math.random()*messages.length)];
-                } else if(requestCount >= 3) {
+                } else if(requestCount >= 2) {
                     message = "@" + pingName + " Banned. I'm a bot, arguing won't help.";
                 }
 
                 console.log(message);
                 output.sendToRoom(message, 15);
 
-                if(requestCount >= 3) {
+                if(requestCount >= 2) {
                     IO.xhr({
                         url   : '/rooms/setuseraccess/15',
                         data   : {
