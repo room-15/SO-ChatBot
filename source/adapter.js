@@ -499,7 +499,10 @@ var input = {
             var pingName = resp.ping_name;
             var issues = "";
             var user_id = resp.user_id;
-            if(badratio || defaultLikeUsername || insufficientRep) {
+            var requestCount = resp.requests;
+            if(requestCount == 2) {
+                var message = "@" + pingName + " ";
+            } else if(badratio || defaultLikeUsername || insufficientRep) {
                 if(insufficientRep) {
                     issues = issues + "at least 80 rep";
                 }
@@ -519,20 +522,43 @@ var input = {
                 }
 
                 var message = "@" + pingName + " You need " + issues + " to talk here. Please see [this link](" + humanURl + ") for more details."
+
+                if(requestCount == 2) {
+                    var messages = ['Woah now, hold up right there. Spamming the request access button will only get you banned. Come back in 24 hours and request again IF you have fixed the issues outlined in the last message. Requesting access again in less than 24 hours will result in a ban.', 
+'Stop. Do not pass go. Do not collect 200. Repeatedly requesting access will result in a ban. Come back when you have fixed the issues outlined in the last message. Requesting access again in less than 24 hours will result in a ban.', 
+'Strike 2/3. Requesting access again in less than 24 hours will result in a ban.', 
+'I may be a bot, but I can understand pointless actions. Requesting access again in less than 24 hours will result in a ban.'];
+                    message = "@" + pingName + " " + messages[Math.floor(Math.random()*messages.length)];
+                } else if(requestCount >= 3) {
+                    message = "@" + pingName + " Banned. I'm a bot, arguing won't help.";
+                }
+
                 console.log(message);
                 output.sendToRoom(message, 15);
 
-            
-                IO.xhr({
-                    url   : '/rooms/setuseraccess/15',
-                    data   : {
-                        userAccess : 'remove',
-                        aclUserId : user_id,
-                        fkey : fkey().fkey
-                    },
-                    method  : 'POST',
-                    complete : finish
-                });
+                if(requestCount >= 3) {
+                    IO.xhr({
+                        url   : '/rooms/setuseraccess/15',
+                        data   : {
+                            userAccess : 'read-only',
+                            aclUserId : user_id,
+                            fkey : fkey().fkey
+                        },
+                        method  : 'POST',
+                        complete : finish
+                    });
+                } else {
+                    IO.xhr({
+                        url   : '/rooms/setuseraccess/15',
+                        data   : {
+                            userAccess : 'remove',
+                            aclUserId : user_id,
+                            fkey : fkey().fkey
+                        },
+                        method  : 'POST',
+                        complete : finish
+                    });
+                }
                 function finish ( resp, xhr ) {
                     //Nothing to do here
                 }
