@@ -1947,7 +1947,7 @@ module.exports = function (bot) {
         var commands = {
             flip : function( args ) {
                 console.log(JSON.stringify(args))
-                return '(╯°□°）╯︵ ┻━┻';
+                args.send('(╯°□°）╯︵ ┻━┻');
             },
 
             meow : function( args ) {
