@@ -8,6 +8,11 @@ var unicornLastRun;
 module.exports = function (bot) {
 
         var commands = {
+            flip : function( args ) {
+                console.log(JSON.stringify(args))
+                return '(╯°□°）╯︵ ┻━┻';
+            },
+
             meow : function( args ) {
         
             var currentRun = new Date().getTime();
