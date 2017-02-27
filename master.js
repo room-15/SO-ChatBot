@@ -1158,9 +1158,9 @@ var input = {
                 }
                 if(badratio) {
                     if(issues == "") {
-                        issues = issues + "a q:a ratio of 3:4";
+                        issues = issues + "a a:q ratio of 3:4";
                     } else {
-                        issues = issues + ", and a q:a ratio of 3:4";
+                        issues = issues + ", and a a:q ratio of 3:4";
                     }
                 }
                 if(defaultLikeUsername) {
