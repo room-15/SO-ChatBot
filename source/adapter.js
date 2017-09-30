@@ -392,16 +392,21 @@ var input = {
         // 4 => user left room
         // 10 => message deleted
         var et = msg.event_type;
+        var source = msg.user_id;
+        if(et != 16 && et !=3 && et !=4 && et != 15) {
+            
+        }
         if (et === 3 || et === 4) {
             this.handleUserEvent(msg);
             return;
         } else if (et === 16) {
             console.log("A new access request!");
             this.processAccessRequest(msg);
-        }
-        else if (et !== 1 && et !== 2) {
+        } else if (et != 1 && et != 2) {
             console.log("ET: " + et);
             bot.log(msg, "log message");
+            return;
+        } else if(source != 1380752 && source != 68805 && source != 180538 && source != 2029566 && source != 1069068 && source != 1333975 && source != 3131147 && source != 2171147 && source != 706836 && source != 763530) {
             return;
         }
 
